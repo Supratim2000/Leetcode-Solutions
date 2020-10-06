@@ -1,26 +1,23 @@
 class Solution {
 public:
     int peakIndexInMountainArray(vector<int>& arr) {
-        vector<bool> mount;
-        mount.push_back(true);
-        for(int i=1;i<arr.size();i++)
-            arr[i-1]<arr[i] ? mount.push_back(true) : mount.push_back(false);
-        
-        long long low = 0;
-        long long high = mount.size()-1;
-        long long ans;
-        
+        if(arr[1]>arr[0] && arr[2]<arr[1])
+            return 1;
+        unsigned long long low = 0;
+        unsigned long long high = arr.size()-1;
+        unsigned long long mid,ans;
         while(low<=high)
         {
-            long long mid = low + (high-low)/2;
-            if(mount[mid]==true) {
+            mid = low + (high - low)/2;
+            if(arr[mid-1]<arr[mid])
+            {
                 ans=mid;
-                low = mid + 1;
+                low= mid + 1;
             }
             else
                 high = mid - 1;
         }
-        return ans;                
+        return ans;
             
     }
 };
