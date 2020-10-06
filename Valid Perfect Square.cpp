@@ -21,3 +21,17 @@ public:
         return binarySearch(num);
     }
 };
+
+/*
+
+    Alternative Method:-
+    --------------------
+    
+    class Solution {
+    public:
+        bool isPerfectSquare(int num) {
+            return sqrt(num)==(int)sqrt(num) ? true : false;
+    }
+};
+
+*/
