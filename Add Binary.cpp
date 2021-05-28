@@ -3,9 +3,7 @@ public:
     
     int num(char ch)
     {
-        if(ch=='1')
-            return 1;
-        return 0;
+        return ch-48;
     }
     
     void reverseString(string& str)
