@@ -1,3 +1,4 @@
+//Method 1
 class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
@@ -29,5 +30,34 @@ public:
                 pendingNodes.push(ans);
         }
         return arr;   
+    }
+};
+
+//Method 2
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        if(root==nullptr)
+            return ans;
+        queue<TreeNode*> pendingNodes;
+        pendingNodes.push(root);
+        while(!pendingNodes.empty())
+        {
+            int n=pendingNodes.size();
+            vector<int> curLev;
+            for(int i=0;i<n;i++)
+            {
+                TreeNode* curNode=pendingNodes.front();
+                pendingNodes.pop();
+                curLev.push_back(curNode->val);
+                if(curNode->left!=nullptr)
+                    pendingNodes.push(curNode->left);
+                if(curNode->right!=nullptr)
+                    pendingNodes.push(curNode->right);
+            }
+            ans.push_back(curLev);
+        }
+        return ans;   
     }
 };
