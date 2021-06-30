@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+    //Method 1
     void helper(TreeNode* root,vector<int>& arr)
     {
         if(root==nullptr)
@@ -28,4 +28,28 @@ public:
         }
         return false;
     }
+    
+    void dfs(TreeNode* root, unordered_set<int>& pres, int& k, bool& isPresent)
+    {
+        if(root==nullptr)
+            return ;
+        dfs(root->left,pres,k,isPresent);
+        dfs(root->right,pres,k,isPresent);
+        if(pres.find(k-root->val)==pres.end())
+            pres.insert(root->val);
+        else
+        {
+            isPresent=true;
+            return;
+        }
+    }
+    
+    //Method 2
+    bool findTarget(TreeNode* root, int k) {
+        unordered_set<int> pres;
+        bool isPresent=false;
+        dfs(root,pres,k,isPresent);
+        return isPresent;
+    }
+    
 };
