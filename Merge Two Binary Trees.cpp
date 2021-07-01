@@ -9,12 +9,12 @@ public:
             return root2;
         else
         {
+            root1->val+=root2->val;
             TreeNode* mergedLeft=mergeTrees(root1->left,root2->left);
             TreeNode* mergedRight=mergeTrees(root1->right,root2->right);
-            TreeNode* mergedRoot=new TreeNode(root1->val+root2->val);
-            mergedRoot->left=mergedLeft;
-            mergedRoot->right=mergedRight;
-            return mergedRoot;
+            root1->left=mergedLeft;
+            root1->right=mergedRight;
+            return root1;
         }
     }
 };
