@@ -46,55 +46,37 @@ class Solution {
 public:    
     pair<int,bool> treeBalanced(TreeNode* root)
     {
+        pair<int,bool> ans;
         if(root==nullptr)
         {
-            pair<int,bool> ans;
             ans.first=0;
             ans.second=true;
-            return ans;
         }
         else if(root->left==nullptr && root->right==nullptr)
         {
-            pair<int,bool> ans;
             ans.first=1;
             ans.second=true;
-            return ans;
         }
         else if(root->left==nullptr && root->right!=nullptr)
         {
-            pair<int,bool> ans;
             pair<int,bool> right=treeBalanced(root->right);
-            
-            if(right.second && right.first==1)
-                ans.second=true;
-            else
-                ans.second=false;
+            ans.second=(right.second && right.first==1);
             ans.first=right.first+1;
-            return ans;
         }
         else if(root->left!=nullptr && root->right==nullptr)
         {   
-            pair<int,bool> ans;
             pair<int,bool> left=treeBalanced(root->left);
-            if(left.second && left.first==1)
-                ans.second=true;
-            else
-                ans.second=false;
+            ans.second=(left.second && left.first==1);
             ans.first=left.first+1;
-            return ans;
         }
         else
         {
-            pair<int,bool> ans;
             pair<int,bool> left=treeBalanced(root->left);
             pair<int,bool> right=treeBalanced(root->right);
-            if(left.second && right.second && abs(left.first-right.first)<=1)
-                ans.second=true;
-            else
-                ans.second=false;
+            ans.second=(left.second && right.second && abs(left.first-right.first)<=1);            
             ans.first=max(left.first,right.first)+1;
-            return ans;
         }
+        return ans;
     }
     
     bool isBalanced(TreeNode* root) {
