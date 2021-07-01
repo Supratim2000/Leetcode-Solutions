@@ -23,6 +23,6 @@ public:
             return true;
         if(root->left==nullptr || root->right==nullptr)
             return false;
-        return checkMirror(root->left,root->right) && root->left->val==root->right->val;
+        return checkMirror(root->left,root->right);
     }
 };
