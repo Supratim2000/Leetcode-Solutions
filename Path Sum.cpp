@@ -5,6 +5,16 @@ public:
             return false;
         if(root->val==targetSum && root->left==nullptr && root->right==nullptr)
             return true;
-        return hasPathSum(root->left,targetSum-root->val) || hasPathSum(root->right,targetSum-root->val);
+        
+        bool hasLeft=hasPathSum(root->left,targetSum-root->val);
+        if(hasLeft)
+            return true;
+        else
+        {
+            bool hasRight=hasPathSum(root->right,targetSum-root->val);
+            if(hasRight)
+                return true;
+        }    
+        return false;
     }
 };
