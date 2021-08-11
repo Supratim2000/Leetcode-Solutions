@@ -6,32 +6,23 @@ public:
         return node->left==nullptr && node->right==nullptr;
     }
     
-    void helper(TreeNode* root,string ans,vector<string>& res)
+    void util(TreeNode* root,vector<string>& res,string ans)
     {
-        if(root==nullptr)
-            return;
+        ans+=to_string(root->val);
         if(isLeaf(root))
-        {
-            ans+=to_string(root->val);
             res.push_back(ans);
-            ans="";
-        }
-        ans+=to_string(root->val)+"->";
-        helper(root->left,ans,res);
-        helper(root->right,ans,res);
+        if(root->left)
+            util(root->left,res,ans+"->");
+        if(root->right)
+            util(root->right,res,ans+"->");
     }
     
     vector<string> binaryTreePaths(TreeNode* root) {
         string ans="";
         vector<string> res;
-        if(isLeaf(root))
-        {
-            ans+=to_string(root->val);
-            res.push_back(ans);
+        if(root==nullptr)
             return res;
-        }
-        else
-            helper(root,ans,res);
+        util(root,res,ans);
         return res;
     }
 };
