@@ -1,27 +1,22 @@
 class Solution {
 public:
     TreeNode* prev=nullptr;
-    bool f_time=true;
     TreeNode* ff=nullptr;
     TreeNode* ss=nullptr;
     TreeNode* maybeUsed=nullptr;
-    bool flag=true;
     
     void dfs(TreeNode* root)
     {
         if(root==nullptr)
             return;
         dfs(root->left);
-        if(f_time)
-            f_time=false;
-        else
+        if(prev!=nullptr)
         {
             TreeNode* curNode=root;
             if(prev->val>=root->val)
             {
-                if(flag)
+                if(ff==nullptr)
                 {
-                    flag=false;
                     ff=prev;
                     maybeUsed=curNode;
                 }
