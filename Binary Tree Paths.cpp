@@ -20,8 +20,6 @@ public:
     vector<string> binaryTreePaths(TreeNode* root) {
         string ans="";
         vector<string> res;
-        if(root==nullptr)
-            return res;
         util(root,res,ans);
         return res;
     }
