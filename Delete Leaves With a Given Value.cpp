@@ -1,3 +1,4 @@
+//Method 1
 class Solution {
 public:
     
@@ -38,6 +39,28 @@ public:
         TreeNode* curParent=nullptr;
         postOrder(root,curParent,target,isDeleteRoot);
         if(isDeleteRoot)
+            return nullptr;
+        return root;
+    }
+};
+
+//Method 2
+class Solution {
+public:
+    
+    bool isLeaf(TreeNode* root)
+    {
+        return root->left==nullptr && root->right==nullptr;
+    }
+    
+    TreeNode* removeLeafNodes(TreeNode* root, int target) {
+        if(root==nullptr)
+            return nullptr;
+        TreeNode* leftPart=removeLeafNodes(root->left,target);
+        TreeNode* rightPart=removeLeafNodes(root->right,target);
+        root->left=leftPart;
+        root->right=rightPart;
+        if(isLeaf(root) && root->val==target)
             return nullptr;
         return root;
     }
