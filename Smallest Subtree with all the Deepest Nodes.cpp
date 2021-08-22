@@ -1,22 +1,16 @@
 //Method 1
 class Solution {
 public:
-    
-    int deepestLevel=INT_MIN;
-    
     bool isLeaf(TreeNode* root)
     {
         return root->left==nullptr && root->right==nullptr;
     }
     
-    void traverse(TreeNode* root,int curLevel,TreeNode* curNodePar,unordered_map<TreeNode*,TreeNode*>& parent,vector<TreeNode*>& deepestLeaf)
+    void traverse(TreeNode* root,int curLevel,int& deepestLevel,TreeNode* curNodePar,unordered_map<TreeNode*,TreeNode*>& parent,vector<TreeNode*>& deepestLeaf)
     {
         if(root==nullptr)
             return;
-        
         parent.insert({root,curNodePar});
-        
-        
         if(curLevel>=deepestLevel)
         {
             if(curLevel>deepestLevel)
@@ -24,10 +18,8 @@ public:
             deepestLeaf.push_back(root);
             deepestLevel=curLevel;
         }
-        
-        
-        traverse(root->left,curLevel+1,root,parent,deepestLeaf);
-        traverse(root->right,curLevel+1,root,parent,deepestLeaf);
+        traverse(root->left,curLevel+1,deepestLevel,root,parent,deepestLeaf);
+        traverse(root->right,curLevel+1,deepestLevel,root,parent,deepestLeaf);
     }
     
     TreeNode* subtreeWithAllDeepest(TreeNode* root) {
@@ -36,7 +28,8 @@ public:
         unordered_map<TreeNode*,TreeNode*> parent;
         unordered_set<TreeNode*> s;
         vector<TreeNode*> deepestLeaf;
-        traverse(root,0,nullptr,parent,deepestLeaf);
+        int deepestLevel=INT_MIN;
+        traverse(root,0,deepestLevel,nullptr,parent,deepestLeaf);
         
         if(deepestLeaf.size()==1)
             return deepestLeaf[0];
@@ -56,4 +49,40 @@ public:
     }
 };
 
-//Method 2(todo)
+//Method 2
+class Solution {
+public:
+    int height(TreeNode* root,unordered_map<TreeNode*,int>& heightMap)
+    {
+        if(root==nullptr)
+            return 0;
+        int lefth=height(root->left,heightMap);
+        int righth=height(root->right,heightMap);
+        int curDepth=max(lefth,righth)+1;
+        heightMap.insert({root,curDepth});
+        return curDepth;
+    } 
+    
+    TreeNode* findSmallestSubTree(TreeNode* root,unordered_map<TreeNode*,int>& heightMap)
+    {
+        if(root==nullptr)
+            return nullptr;
+        
+        int lefth=heightMap[root->left];
+        int righth=heightMap[root->right];
+        
+        if(lefth==righth)
+            return root;
+        else if(lefth<righth)
+            return findSmallestSubTree(root->right,heightMap);
+        else
+            return findSmallestSubTree(root->left,heightMap);
+    }
+    
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        unordered_map<TreeNode*,int> heightMap;
+        heightMap.insert({nullptr,0});
+        height(root,heightMap);
+        return findSmallestSubTree(root,heightMap); 
+    }
+};
