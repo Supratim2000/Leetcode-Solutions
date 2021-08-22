@@ -16,7 +16,7 @@ public:
             int topCol=upCol;
             int downRow=leftRow;
             int downCol=leftCol;   
-            if(count%2!=0)
+            if(count&1)
             {
                 while(topRow!=downRow+1)
                     ans.push_back(mat.at(topRow++).at(topCol--));
