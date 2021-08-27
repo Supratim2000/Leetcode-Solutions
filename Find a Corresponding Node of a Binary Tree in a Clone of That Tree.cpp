@@ -47,3 +47,28 @@ public:
         return ans;
     }
 };
+
+//BFS Solution
+class Solution {
+public:
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        queue<pair<TreeNode*,TreeNode*>> q;
+        q.push({original,cloned});
+        while(!q.empty())
+        {
+            int n=q.size();
+            for(int i=0;i<n;i++)
+            {
+                pair<TreeNode*,TreeNode*> curNodes=q.front();
+                q.pop();
+                if(curNodes.first==target)
+                    return curNodes.second;
+                if(curNodes.first->left)
+                    q.push({curNodes.first->left,curNodes.second->left});
+                if(curNodes.first->right)
+                    q.push({curNodes.first->right,curNodes.second->right});
+            }
+        }
+        return nullptr;
+    }
+};
