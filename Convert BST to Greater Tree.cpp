@@ -2,7 +2,7 @@ class Solution {
 public:
     void reverseInorder(TreeNode* root,int& prev)
     {
-        if(root==nullptr)
+        if(!root)
             return;
         reverseInorder(root->right,prev);
         root->val+=prev;
@@ -10,7 +10,7 @@ public:
         reverseInorder(root->left,prev);
     }
     
-    TreeNode* convertBST(TreeNode* root) {
+    TreeNode* bstToGst(TreeNode* root) {
         int prev=0;
         reverseInorder(root,prev);
         return root;
