@@ -1,6 +1,6 @@
+//Using linked list
 class MyHashMap {
 public:
-    
     class Node
     {
         public:
