@@ -25,10 +25,73 @@ public:
     }
 };
 
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet* obj = new MyHashSet();
- * obj->add(key);
- * obj->remove(key);
- * bool param_3 = obj->contains(key);
- */
+//Using Singly linked list
+class MyHashSet {
+public:
+    
+    class Node
+    {
+        public:
+            int val;
+            Node* next;
+            Node(int val)
+            {
+                this->val=val;
+                next=nullptr;
+            }
+    };
+    
+    Node* head;
+    
+    MyHashSet() {
+        head=nullptr;
+    }
+    
+    void add(int key) {
+        if(!contains(key))
+        {
+            if(head==nullptr)
+                head=new Node(key);
+            else
+            {
+                Node* temp=new Node(key);
+                temp->next=head;
+                head=temp;
+            }
+        }
+    }
+    
+    void remove(int key) {
+        Node* p=nullptr;
+        Node* t=head;
+        while(t)
+        {
+            if(t->val==key)
+            {
+                if(p==nullptr)
+                {
+                    head=head->next;
+                    Node* toDelete=t;
+                    t=head;
+                    delete toDelete;
+                }
+                else
+                    p->next=t->next;
+                return;
+            }
+            p=t;
+            t=t->next;
+        }
+    }
+    
+    bool contains(int key) {
+        Node* t=head;
+        while(t)
+        {
+            if(t->val==key)
+                return true;
+            t=t->next;
+        }
+        return false;
+    }
+};
