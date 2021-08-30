@@ -56,7 +56,6 @@ class Solution
                 cur=prev->next;
             }
         }
-        prev->next=nullptr;
         return head;
     }
 };
