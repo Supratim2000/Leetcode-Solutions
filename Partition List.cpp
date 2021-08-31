@@ -11,13 +11,15 @@ public:
         {
             if(p->val<x)
             {
-                l1->next=p;
+                if(l1->next!=p)
+                    l1->next=p;
                 l1=p;
                 l2->next=nullptr;
             }
             else
             {
-                l2->next=p;
+                if(l2->next!=p)
+                    l2->next=p;
                 l2=p;
                 l1->next=nullptr;
             }
