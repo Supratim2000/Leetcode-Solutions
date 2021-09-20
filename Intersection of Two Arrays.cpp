@@ -45,7 +45,6 @@ public:
         vector<int> ans;
         unordered_set<int> doneInNums2;
         sort(nums1.begin(),nums1.end());
-        sort(nums2.begin(),nums2.end());
         for(int i=0;i<m;i++)
         {
             if(doneInNums2.find(nums2[i])==doneInNums2.end() && binSrc(nums1,nums2[i],0,n-1))
