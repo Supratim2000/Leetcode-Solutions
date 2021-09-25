@@ -23,7 +23,7 @@ public:
         int h=maximum(nums,n)+1;
         while(l<=h)
         {
-            int mid=(l+h)/2;
+            int mid=l+(h-l)/2;
             long long res=divSum(nums,n,mid);
             if(res<=threshold)
             {
