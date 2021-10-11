@@ -8,7 +8,7 @@ public:
             for(int j=i+1;j<n;j++)
                 freq[nums[i]*nums[j]]++;
         for(auto x: freq)
-            count+=(8*(((x.second-1)*((x.second-1)+1))/2));
+            count+=4*x.second*(x.second-1);
         return count;
     }
 };
