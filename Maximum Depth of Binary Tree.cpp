@@ -36,3 +36,30 @@ public:
         return maxDep;
     }
 };
+
+//Solution - 4(BFS)
+class Solution {
+public:    
+    int maxDepth(TreeNode* root) {
+        if(!root)
+            return 0;
+        int height=0;
+        queue<TreeNode*> qu;
+        qu.push(root);
+        while(!qu.empty())
+        {
+            int size=qu.size();
+            for(int i=0;i<size;i++)
+            {
+                TreeNode* curNode=qu.front();
+                qu.pop();
+                if(curNode->left)
+                    qu.push(curNode->left);
+                if(curNode->right)
+                    qu.push(curNode->right);
+            }
+            height++;
+        }
+        return height;
+    }
+};
