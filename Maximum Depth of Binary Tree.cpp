@@ -1,4 +1,16 @@
-//Solution - 1
+//Solution - 1(Beginner friendly)
+class Solution {
+public:    
+    int maxDepth(TreeNode* root) {
+        if(!root)
+            return 0;
+        int leftMaxDepth=maxDepth(root->left);
+        int rightMaxDepth=maxDepth(root->right);
+        return max(leftMaxDepth,rightMaxDepth)+1;
+    }
+};
+
+//Solution - 2(1 line solution)
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
@@ -6,7 +18,7 @@ public:
     }
 };
 
-//Solution - 2
+//Solution - 3(DFS)
 class Solution {
 public:    
     void helper(TreeNode* root,int curDep,int& maxDep) {
