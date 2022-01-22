@@ -19,26 +19,24 @@ public:
 
 //Optimised O(n)
 class Solution {
-public:    
-    int height(TreeNode* root,bool &balanced)
+public:
+    int height(TreeNode* root)
     {
-        if(root==nullptr)
+        if(!root)
             return 0;
-        int leftHeight=height(root->left,balanced);
-        int rightHeight=height(root->right,balanced);
+        int leftHeight=height(root->left);
+        if(leftHeight==-1)
+            return -1;
+        int rightHeight=height(root->right);
+        if(rightHeight==-1)
+            return -1;
         if(abs(leftHeight-rightHeight)>1)
-        {
-            balanced=false;
-            return 10000;
-        }
+            return -1;
         return max(leftHeight,rightHeight)+1;
     }
-
     bool isBalanced(TreeNode* root) {
-        bool balanced=true;
-        height(root,balanced);
-        return balanced;
-    }
+        return height(root)!=-1;
+    }  
 };
 
 //Optimised O(n) with a function which returns both height and isHieghtBalanced simultaniously in pair
