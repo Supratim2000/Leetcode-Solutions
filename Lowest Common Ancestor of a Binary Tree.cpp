@@ -34,6 +34,45 @@ public:
     }
 };
 
+//Bit optimised approach
+class Solution {
+public:
+    void rootToNodePath(TreeNode* root, TreeNode* target, vector<TreeNode*>& path, bool& hasPath)
+    {
+        if(!root)
+            return ;
+        if(!hasPath)
+            path.push_back(root);
+        if(root==target)
+        {
+            hasPath=true;
+            return;
+        }
+        rootToNodePath(root->left, target, path, hasPath);
+        rootToNodePath(root->right, target, path, hasPath);
+        if(!hasPath)
+            path.pop_back();
+    }
+    
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* ansNode=nullptr;
+        bool hasPathP=false;
+        bool hasPathQ=false;
+        vector<TreeNode*> path_p;
+        vector<TreeNode*> path_q;
+        rootToNodePath(root,p,path_p,hasPathP);
+        rootToNodePath(root,q,path_q,hasPathQ);
+        for(int i=0;i<min(path_p.size(), path_q.size());i++)
+        {
+            if(path_p.at(i)==path_q.at(i))
+                ansNode=path_p.at(i);
+            else
+                break;
+        }
+        return ansNode;
+    }
+};
+
 //Optimised code
 class Solution {
 public:
