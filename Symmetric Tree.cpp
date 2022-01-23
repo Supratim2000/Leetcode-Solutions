@@ -1,28 +1,21 @@
 class Solution {
 public:
-    
-    bool checkMirror(TreeNode* root1, TreeNode* root2)
+    bool isMirror(TreeNode* r1, TreeNode* r2)
     {
-        if(root1==nullptr && root2==nullptr)
+        if(!r1 && !r2)
             return true;
-        if(root1==nullptr || root2==nullptr)
+        if(!r1 || !r2)
             return false;
-        bool isLeftMirror=checkMirror(root1->left,root2->right);
-        if(!isLeftMirror)
+        if(r1->val!=r2->val)
             return false;
-        bool isRightMirror=checkMirror(root1->right,root2->left);
-        if(!isRightMirror)
+        bool mirror_1=isMirror(r1->left,r2->right);
+        if(!mirror_1)
             return false;
-        return isLeftMirror && isRightMirror && root1->val==root2->val;
+        bool mirror_2=isMirror(r1->right,r2->left);
+        return mirror_2;
     }
     
     bool isSymmetric(TreeNode* root) {
-        if(root==nullptr)
-            return true;
-        if(root->left==nullptr && root->right==nullptr)
-            return true;
-        if(root->left==nullptr || root->right==nullptr)
-            return false;
-        return checkMirror(root->left,root->right);
+        return isMirror(root->left,root->right);
     }
 };
