@@ -1,4 +1,4 @@
-//Using BFS(Recursive)
+//Using DFS(Recursive)
 #include<map>
 
 void dfs(TreeNode<int> *root,int spread,int level,map<int,pair<int,int>>& mp)
