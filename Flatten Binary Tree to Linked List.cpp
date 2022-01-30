@@ -1,44 +1,37 @@
 class Solution {
-public:
-    pair<TreeNode*,TreeNode*> convert(TreeNode* root)
+public:  
+    //<Head, Tail>
+    pair<TreeNode*,TreeNode*> flat(TreeNode* root)
     {
-        pair<TreeNode*,TreeNode*> ans(nullptr,nullptr);
-        if(root->left==nullptr && root->right==nullptr)
+        if(!root)
+            return {nullptr,nullptr};
+        else if(!root->left && !root->right)
+            return {root,root};
+        else if(!root->left)
         {
-            ans.first=root;
-            ans.second=root;
+            pair<TreeNode*,TreeNode*> right=flat(root->right);
+            root->right=right.first;
+            return {root,right.second};
         }
-        else if(root->right==nullptr)
+        else if(!root->right)
         {
-            pair<TreeNode*,TreeNode*> leftPart=convert(root->left);
-            root->right=leftPart.first;
+            pair<TreeNode*,TreeNode*> left=flat(root->left);
+            root->right=left.first;
             root->left=nullptr;
-            ans.first=root;
-            ans.second=leftPart.second;
-        }
-        else if(root->left==nullptr)
-        {
-            pair<TreeNode*,TreeNode*> rightPart=convert(root->right);
-            root->right=rightPart.first;
-            ans.first=root;
-            ans.second=rightPart.second;
+            return {root,left.second};
         }
         else
         {
-            pair<TreeNode*,TreeNode*> leftPart=convert(root->left);
-            pair<TreeNode*,TreeNode*> rightPart=convert(root->right);
+            pair<TreeNode*,TreeNode*> left=flat(root->left);
+            pair<TreeNode*,TreeNode*> right=flat(root->right);
             root->left=nullptr;
-            root->right=leftPart.first;
-            leftPart.second->right=rightPart.first;
-            ans.first=root;
-            ans.second=rightPart.second;
+            root->right=left.first;
+            left.second->right=right.first;
+            return {root,right.second};
         }
-        return ans;
     }
     
     void flatten(TreeNode* root) {
-        if(root==nullptr)
-            return ;
-        convert(root);
+        flat(root);
     }
 };
