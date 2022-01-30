@@ -1,43 +1,31 @@
 class Solution {
 public:
-    int searchRootDataIndex(vector<int>& inorder,vector<int>& preorder, int preLow, int preHigh, int inLow,int inHigh)
+    TreeNode* create(vector<int>& preorder, vector<int>& inorder, unordered_map<int,int>& hash,int ps,int pe,int is,int ie)
     {
-        int rootData=preorder.at(preLow);
-        for(int i=inLow;i<=inHigh;i++)
-        {
-            if(inorder.at(i)==rootData)
-                return i;
-        }
-        return -1;
-    }
-
-    TreeNode* createTree(vector<int>& inorder, vector<int>& preorder, int preLow, int preHigh, int inLow, int inHigh)
-    {
-        if((inHigh<inLow) || (preHigh<preLow))
+        if(ps>pe || is>ie)
             return nullptr;
-
-        int rootDataIndex=searchRootDataIndex(inorder,preorder,preLow,preHigh,inLow,inHigh);
-        
-        int lInS=inLow;
-        int lInE=rootDataIndex-1;
-        int rInS=rootDataIndex+1;
-        int rInE=inHigh;
-        int lPreS=preLow+1;
-        int lPreE=lInE-lInS+lPreS;
-        int rPreS=lPreE+1;
-        int rPreE=preHigh;
-        
-        TreeNode* root=new TreeNode(inorder.at(rootDataIndex));
-
-        TreeNode* leftPart=createTree(inorder,preorder,lPreS,lPreE,lInS,lInE);
-        TreeNode* rightPart=createTree(inorder,preorder,rPreS,rPreE,rInS,rInE);
-        
-        root->left=leftPart;
-        root->right=rightPart;
+        int rootIndxInInorder=hash[preorder[ps]];
+        int lps=ps+1;
+        int lpe=ps+rootIndxInInorder-is;
+        int rps=lpe+1;
+        int rpe=pe;
+        int lis=is;
+        int lie=rootIndxInInorder-1;
+        int ris=rootIndxInInorder+1;
+        int rie=ie;
+        TreeNode* root=new TreeNode(preorder[ps]);
+        TreeNode* left=create(preorder,inorder,hash,lps,lpe,lis,lie);
+        TreeNode* right=create(preorder,inorder,hash,rps,rpe,ris,rie);
+        root->left=left;
+        root->right=right;
         return root;
     }
     
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return createTree(inorder,preorder,0,preorder.size()-1,0,inorder.size()-1);
+        int n=preorder.size();
+        unordered_map<int,int> hash;
+        for(int i=0;i<n;i++)
+            hash[inorder[i]]=i;
+        return create(preorder,inorder,hash,0,n-1,0,n-1);
     }
 };
