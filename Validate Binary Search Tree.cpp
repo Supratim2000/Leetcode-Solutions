@@ -35,26 +35,24 @@ public:
 
 //Method 2
 class Solution {
-public:
-    typedef long long ll;
-    void fun(TreeNode* root,ll min,ll max,bool& ans)
+public: 
+    void validate(TreeNode* root, long long min, long long max, bool& isBst)
     {
-        if(root==nullptr)
+        if(!root)
             return;
-        fun(root->left,min,(ll)root->val-1,ans);
-        if(root->val<min || root->val>max)
+        if(root->val>max || root->val<min)
         {
-            ans=false;
+            isBst=false;
             return;
         }
-        fun(root->right,(ll)root->val+1,max,ans);
+        if(isBst)
+            validate(root->left,min,(long long)root->val-1,isBst);
+        if(isBst)
+            validate(root->right,(long long)root->val+1,max,isBst);
     }
-    
     bool isValidBST(TreeNode* root) {
-        
-        bool ans=true;
-        ll max=INT_MAX,min=INT_MIN;
-        fun(root,min,max,ans);
-        return ans;
+        bool isBst=true;
+        validate(root,LLONG_MIN,LLONG_MAX,isBst);
+        return isBst;
     }
 };
