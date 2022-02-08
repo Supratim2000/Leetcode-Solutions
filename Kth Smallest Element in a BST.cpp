@@ -12,8 +12,7 @@ public:
             return;
         }
         if(ans==-1)
-            inorder(root->right, count, ans);
-        
+            inorder(root->right, count, ans);  
     }
     int kthSmallest(TreeNode* root, int k) {
         int ans=-1;
