@@ -10,22 +10,17 @@ public:
         {
             if(i==j)
             {
-                if(people[i]<=limit)
-                    count++;
+                count++;
                 break;
             }
             else if(people[i]+people[j]>limit)
-            {
-                if(people[i]<=limit)
-                    count++;
                 j--;
-            }
             else
             {
                 i++;
                 j--;
-                count++;
             }
+            count++;
         }
         return count;
     }
