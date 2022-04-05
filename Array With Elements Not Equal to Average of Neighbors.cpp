@@ -8,10 +8,8 @@ public:
         int j=n-1;
         while(i<=j)
         {
-            ans.push_back(nums[i]);
-            ans.push_back(nums[j]);
-            i++;
-            j--;
+            ans.push_back(nums[i++]);
+            ans.push_back(nums[j--]);
         }
         if(j+2==i)
             ans.pop_back();
