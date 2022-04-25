@@ -61,7 +61,6 @@ public:
         int c=matrix.at(0).size();
         vector<bool> zone(r,false);
         vector<bool> ztwo(c,false);
-        
         for(int i=0;i<r;i++)
         {
             for(int j=0;j<c;j++)
@@ -74,20 +73,8 @@ public:
             }
         }
         for(int i=0;i<r;i++)
-        {
-            if(zone[i]==true)
-            {
-                for(int j=0;j<c;j++)
+            for(int j=0;j<c;j++)
+                if(zone[i] || ztwo[j])
                     matrix[i][j]=0;
-            }
-        }
-        for(int i=0;i<c;i++)
-        {
-            if(ztwo[i]==true)
-            {
-                for(int j=0;j<r;j++)
-                    matrix[j][i]=0;
-            }
-        }
     }
 };
