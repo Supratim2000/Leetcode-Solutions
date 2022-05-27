@@ -1,4 +1,4 @@
-//Time complexity:- O(n^2), Space Complexity:- O(n)
+//Time complexity:- O(n^2)+O(n^2)+O(n^2), Space Complexity:- O(n)
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
@@ -62,7 +62,7 @@ public:
     }
 };
 
-//Time complexity:- O(n^2), Space Complexity:- O(1)
+//Time complexity:- O(n^2)+O(n^2)+O(n^2), Space Complexity:- O(1)
 class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
