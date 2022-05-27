@@ -24,6 +24,32 @@ public:
     }
 };
 
+//Time complexity:- O(n^2)(Single pass), Space Complexity:- O(n)
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        vector<unsigned short> rowHash(10,0);
+        vector<unsigned short> columnHash(10,0);
+        vector<unsigned short> blockHash(10,0);
+        for(int i=0;i<9;i++)
+        {
+            for(int j=0;j<9;j++)
+            {
+                if(board[i][j]!='.')
+                {
+                    int val=board[i][j]-'0';
+                    if((1 << val) & rowHash[i+1] || (1 << val) & columnHash[j+1] || (1 << val) & blockHash[(i/3)*3+j/3+1])
+                        return false;
+                    rowHash[i+1]|=1 << val;
+                    columnHash[j+1]|=1 << val;
+                    blockHash[(i/3)*3+j/3+1]|=1 << val;
+                }
+            }
+        }
+        return true;
+    }
+};
+
 //Time complexity:- O(n^2)+O(n^2)+O(n^2), Space Complexity:- O(n)
 class Solution {
 public:
