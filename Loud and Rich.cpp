@@ -8,11 +8,11 @@ public:
         int minQtNode=cur;
         for(auto x:adj[cur])
         {
-            int adjQtNode=dfs(x,adj,quiet,ans);
-            if(quiet[adjQtNode]<minQt)
+            int insideQtNode=dfs(x,adj,quiet,ans);
+            if(quiet[insideQtNode]<minQt)
             {
-                minQt=quiet[adjQtNode];
-                minQtNode=adjQtNode;
+                minQt=quiet[insideQtNode];
+                minQtNode=insideQtNode;
             }
         }
         ans[cur]=minQtNode;
