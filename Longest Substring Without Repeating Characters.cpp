@@ -48,3 +48,31 @@ public:
         return ans;
     }
 };
+
+//Time Complexity:- O(n)
+//Space complexity:- O(n)
+//Dynamic sliding window
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n=s.length();
+        int i=0;
+        int j=0;
+        int ans=0;
+        unordered_map<int,int> freq;
+        while(j<n)
+        {
+            freq[s[j]]++;
+            while(freq[s[j]]>1)
+            {
+                freq[s[i]]--;
+                if(freq[s[i]]==0)
+                    freq.erase(s[i]);
+                i++;
+            }
+            ans=max(j-i+1,ans);
+            j++;
+        }
+        return ans;
+    }
+};
