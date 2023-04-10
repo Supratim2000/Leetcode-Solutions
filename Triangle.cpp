@@ -1,6 +1,6 @@
 //Memoization
 //Time Complexity:- O(n^2)
-//Space Complexity:- O(n^2)
+//Space Complexity:- O(n^2)+O(n) (Due to recursion stack space)
 class Solution {
 public:
     int fun(int i, int j, int n, vector<vector<int>>& triangle,vector<vector<int>>& dp)
