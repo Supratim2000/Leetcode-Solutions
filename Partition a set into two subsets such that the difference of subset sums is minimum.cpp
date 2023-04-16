@@ -1,7 +1,7 @@
 #include <bits/stdc++.h> 
 
-//Space optimised DP solution
-void generateIfSubsetSumPossible(int n, int k, int& minDiff, vector<int> &arr) {
+//Space optimized DP solution
+vector<bool> generateIfSubsetSumPossible(int n, int k, vector<int> &arr) {
     vector<bool> prev(k+1,false);
     vector<bool> cur(k+1,false);
     prev[0]=true;
@@ -21,9 +21,7 @@ void generateIfSubsetSumPossible(int n, int k, int& minDiff, vector<int> &arr) {
         for(int x=0;x<=k;x++)
             prev[x]=cur[x];
     }
-    for(int i=0;i<=k;i++)
-        if(prev[i])
-            minDiff=min(abs(2*i-k), minDiff);
+    return prev;
 }
 
 int minSubsetSumDifference(vector<int>& arr, int n)
@@ -32,6 +30,9 @@ int minSubsetSumDifference(vector<int>& arr, int n)
 	int totalSum=0;
 	for(int i=0;i<n;i++)
 		totalSum+=arr[i];
-	generateIfSubsetSumPossible(n, totalSum, minDiff, arr);
-	return minDiff;
+	vector<bool> possibleSubsetSums=generateIfSubsetSumPossible(n, totalSum, arr);
+	for(int i=0;i<=totalSum;i++)
+        if(possibleSubsetSums[i])
+            minDiff=min(abs(2*i-totalSum), minDiff);
+    return minDiff;
 }
