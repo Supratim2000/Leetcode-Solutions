@@ -1,5 +1,5 @@
 class Solution {
-public:   
+public:
     void generateMap(unordered_map<char,string>& mp)
     {
         mp.insert({'2',"abc"});
@@ -11,23 +11,29 @@ public:
         mp.insert({'8',"tuv"});
         mp.insert({'9',"wxyz"});
     }
-    
-    void helper(string& digits,int l,unordered_map<char,string>& mp,vector<string>& ans,string cur)
-    {
-        if(digits.size())
+
+    void generateCombinations(string s, string ds, vector<string>& ans,unordered_map<char,string>& mp,int index) {
+        if(s.size()==0)
+            return;
+        if(index==s.size())
         {
-            if(cur.size()==digits.size())
-                ans.push_back(cur);
-            for(int i=0;i<mp[digits[l]].size();i++)
-                helper(digits,l+1,mp,ans,cur+mp[digits[l]][i]);
+            ans.push_back(ds);
+            return;
+        }
+        for(int i=0;i<mp[s[index]].size();i++)
+        {
+            ds.push_back(mp[s[index]][i]);
+            generateCombinations(s,ds,ans,mp,index+1);
+            ds.pop_back();
         }
     }
-    
+
     vector<string> letterCombinations(string digits) {
         unordered_map<char,string> mp;
         generateMap(mp);
+        string ds;
         vector<string> ans;
-        helper(digits,0,mp,ans,"");
+        generateCombinations(digits,ds,ans,mp,0);
         return ans;
     }
 };
