@@ -1,34 +1,55 @@
 class Solution {
 public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int blue=1;
-        int red=2;
+    bool checkBipartite(vector<vector<int>>& graph, vector<int>& color, int node)
+    {
+        bool isComponentBipartite=true;
         int n=graph.size();
-        vector<int> col(n,0);
-        for(int i=0;i<n;i++)
+        queue<int> q;
+        q.push(node);
+        color[node]=0; //starting color black
+        while(!q.empty())
         {
-            if(col[i]==0)
+            int curNode=q.front();
+            q.pop();
+            for(auto neighbour: graph[curNode])
             {
-                queue<int> qu;
-        	    qu.push(i);
-        	    col[i]=blue;
-        	    while(!qu.empty())
-        	    {
-        	        int curNode=qu.front();
-        	        qu.pop();
-        	        for(auto x: graph[curNode])
-        	        {
-        	            if(col[x]==0)
-        	            {
-        	                qu.push(x);
-        	                col[curNode]==blue?col[x]=red:col[x]=blue;
-        	            }
-        	            else if(col[curNode]==col[x])
-        	                    return false;
-        	        }
-	            }
+                //neighbour node not colored
+                if(color[neighbour]==-1)
+                {
+                    int curColor=color[curNode];
+                    color[neighbour]=(curColor==0?1:0);
+                    q.push(neighbour);
+                }
+                else if(color[curNode]==color[neighbour])
+                {
+                    isComponentBipartite=false;
+                    break;
+                }
             }
         }
-        return true;
+        return isComponentBipartite;
+    }
+
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n=graph.size();
+        bool isGraphBipartite=true;
+        /*
+          -1 -> non-colored
+          0 -> black
+          1 -> white
+        */
+        vector<int> color(n,-1);
+        for(int i=0;i<n;i++)
+        {
+            if(color[i]==-1)
+            {
+                if(!checkBipartite(graph,color,i))
+                {
+                    isGraphBipartite=false;
+                    break;
+                }
+            }
+        }
+        return isGraphBipartite;
     }
 };
