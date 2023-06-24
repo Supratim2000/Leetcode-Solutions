@@ -1,3 +1,4 @@
+//Method-1(BFS Kahns Algorithm)
 class Solution {
 private:
     bool kahnsAlgo(int n, vector<int> adj[])
@@ -38,5 +39,48 @@ public:
             adj[it[0]].push_back(it[1]);
 
         return kahnsAlgo(numCourses,adj);
+    }
+};
+
+
+//Method-2(DFS Cycle detection algorithm in directed graph)
+class Solution {
+private:
+    bool checkCycle(vector<int> graph[],int n,int src,vector<bool>& vis,vector<bool>& dfsVis)
+    {
+        vis[src]=true;
+        dfsVis[src]=true;
+        for(int i=0;i<graph[src].size();i++)
+        {
+            int curNode=graph[src][i];
+            if(!vis[curNode] && checkCycle(graph,n,curNode,vis,dfsVis))
+                return true;
+            else if(dfsVis[curNode])
+                return true;
+        }
+        dfsVis[src]=false;
+        return false;
+    }
+    
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        bool hasCycle=false;
+        vector<int> adj[numCourses];
+        vector<bool> vis(numCourses, false);
+        vector<bool> dfsVis(numCourses, false);
+
+        //Creating adjacency list
+        for(auto it: prerequisites)
+            adj[it[0]].push_back(it[1]);
+        for(int i=0;i<numCourses;i++)
+        {
+            if(checkCycle(adj,numCourses,i,vis,dfsVis))
+            {
+                hasCycle=true;
+                break;
+            }
+        }
+
+        return !hasCycle;
     }
 };
