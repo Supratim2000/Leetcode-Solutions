@@ -2,15 +2,18 @@ class Solution {
 public:
     //Method 1
     int minDepth(TreeNode* root) {
-        if(root==nullptr)
+        if(!root)
             return 0;
-        if(root->left==nullptr && root->right==nullptr)
-            return 1;
-        if(root->left==nullptr)
-            return minDepth(root->right)+1;
-        if(root->right==nullptr)
-            return minDepth(root->left)+1;
-        return min(minDepth(root->right),minDepth(root->left))+1;
+        else if(root->left && !root->right)
+            return 1+minDepth(root->left);
+        else if(!root->left && root->right)
+            return 1+minDepth(root->right);
+        else
+        {
+            int leftSubTreeMinDepth=minDepth(root->left);
+            int rightSubTreeMinDepth=minDepth(root->right);
+            return 1+min(leftSubTreeMinDepth,rightSubTreeMinDepth);
+        }
     }
         
     //Method 2
