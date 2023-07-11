@@ -73,6 +73,7 @@ public:
     }
 };
 
+//Using Trie
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& strs) {
@@ -117,5 +118,33 @@ public:
 
             return ans.substr(1);       
         }
+    }
+};
+
+//Without using extra space
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        int n=strs.size();
+        int point=0;
+        string ans="";
+        int smallestStringSize=INT_MAX;
+        for(auto word: strs)
+        {
+            if(word.size()<smallestStringSize)
+                smallestStringSize=word.size();
+        }
+        
+        while(point<smallestStringSize)
+        {
+            for(int i=0;i<n;i++)
+            {
+                if(strs[i][point]!=strs[0][point])
+                    return ans;
+            }
+            ans.push_back(strs[0][point]);
+            point++;
+        }
+        return ans;
     }
 };
