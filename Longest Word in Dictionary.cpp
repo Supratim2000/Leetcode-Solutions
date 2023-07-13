@@ -74,6 +74,7 @@ public:
     }
 };
 
+//Implemented using Trie Data Structure
 class Solution {
 public:
     string longestWord(vector<string>& words) {
@@ -87,6 +88,8 @@ public:
             int count=0;
             TrieNode* node=trie->root;
             for(int i=0;i<word.size();i++) {
+                if(word.size()<ans.size())
+                    continue;
                 char curChar=word[i];
                 if(node->children[curChar-'a']->isTerminal)
                     count++;
@@ -97,6 +100,32 @@ public:
             }
         }
 
+        return ans;
+    }
+};
+
+//Implemented using unordered_set
+class Solution {
+public:
+    string longestWord(vector<string>& words) {
+        unordered_set<string> pres;
+        string ans="";
+        for(string word: words) {
+            pres.insert(word);
+        }
+        for(auto word:words) {
+            bool allPrefixPresent=true;
+            string temp="";
+            for(int i=0;i<word.size();i++) {
+                temp.push_back(word[i]);
+                if(pres.find(temp)==pres.end()) {
+                    allPrefixPresent=false;
+                    break;
+                }
+            }
+            if(allPrefixPresent && (ans=="" || (word.size()==ans.size() && ans>word) || word.size()>ans.size()))
+                ans=word;
+        }
         return ans;
     }
 };
