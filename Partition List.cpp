@@ -1,41 +1,60 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        ListNode* newHead;
-        ListNode* d1=new ListNode(INT_MAX);
-        ListNode* d2=new ListNode(INT_MAX);
-        ListNode* l1=d1;
-        ListNode* l2=d2;
-        ListNode* p=head;
-        while(p)
-        {
-            if(p->val<x)
-            {
-                if(l1->next!=p)
-                    l1->next=p;
-                l1=p;
-                l2->next=nullptr;
+        // head of newly modified linked list
+        ListNode* newHead=nullptr;
+
+        // pointer for traversing the whole linked list
+        ListNode* running=head;
+
+        /* dummy nodes. 
+           small holds the nodes which are smaller than x,
+           big holds the nodes which are greater than or equal to than x
+        */
+        ListNode* small=new ListNode(-101);
+        ListNode* big=new ListNode(101);
+
+        // smallPtr for maintaining the tail and attaching new smaller value nodes
+        ListNode* smallPtr=small;
+        // bigPtr for maintaining the tail and attaching new greater than or equal to value nodes
+        ListNode* bigPtr=big;
+
+        // traversing the whole linked list 
+        while(running) {
+            if(running->val<x) {
+                // if current value is smaller then do some operations
+                smallPtr->next=running;
+                smallPtr=smallPtr->next;
+                running=running->next;
+                smallPtr->next=nullptr;
+            } else {
+                // if current value is greate than or equal then do some operations
+                bigPtr->next=running;
+                bigPtr=bigPtr->next;
+                running=running->next;
+                bigPtr->next=nullptr;
             }
-            else
-            {
-                if(l2->next!=p)
-                    l2->next=p;
-                l2=p;
-                l1->next=nullptr;
-            }
-            p=p->next;
         }
-        if(!d1->next)
-            newHead=d2->next;
-        else if(!d2->next)
-            newHead=d1->next;
-        else
-        {
-            newHead=d1->next;
-            l1->next=d2->next;
-        }
-        delete d1;
-        delete d2;
+
+        // attach the smaller and larger linked list together
+        smallPtr->next=big->next;
+        newHead=small->next;
+
+        //dealocate the dummy nodes
+        delete small;
+        delete big;
+
+        //return the head pointer of newly modified linked list
         return newHead;
     }
 };
